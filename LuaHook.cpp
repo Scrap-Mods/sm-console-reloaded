@@ -1,4 +1,4 @@
-#include "LuaHook.h"
+﻿#include "LuaHook.h"
 #include "ImGuiColorTextEdit/TextEditor.h">
 #include "ConsoleWindow.h"
 #include <iostream>
@@ -18,10 +18,26 @@ namespace LuaHook {
 
 	std::queue<std::string> scripts;
 
+	bool isServerMode(lua_State* L) {
+		lua_getglobal(L, "sm");
+		lua_getfield(L, -1, "isServerMode");
+		lua_call(L, 0, 1);
+		bool isServerMode = lua_toboolean(L, -1);
+		lua_pop(L, 2);
+
+		return isServerMode;
+	}
+
 	void luahook_ExecQueue(lua_State* L, lua_Debug* ar)
 	{
 		lua_sethook(L, nullptr, NULL, NULL);
 		TextEditor::ErrorMarkers markers;
+
+		// cursed recursive code 🤯
+		if (isServerMode(L) != ConsoleWindow::PreferrServerState) {
+			lua_sethook(lState, luahook_ExecQueue, LUA_MASKLINE, NULL);
+			return;
+		}
 
 		while (!scripts.empty()) {
 			if (luaL_loadstring(L, scripts.front().c_str()))

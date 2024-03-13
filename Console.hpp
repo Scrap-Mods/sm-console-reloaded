@@ -10,6 +10,7 @@
 #include <imgui.h>
 
 #define ConsoleOffset 0x128D6E0
+#define DevFlagOffset 0x128D8D8
 
 namespace UTILS
 {
@@ -32,6 +33,7 @@ namespace UTILS
 	};
 
 	extern bool* DevFlag;
+	extern bool* ConsoleAllocated;
 
 	extern float IntensityHigh;
 	extern float IntensityLow;
@@ -127,11 +129,15 @@ namespace UTILS
 		/* 0x004C */ std::uint32_t m_uFileOutMask;
 		/* 0x0050 */ std::uint32_t m_uCallbackOutMask;
 		/* 0x0054 */ char pad_0x54[0x4];
+	public:
 		/* 0x0058 */ HANDLE m_hConsole = NULL;
+	private:
 		/* 0x0060 */ std::ofstream m_logWriter;
 		/* 0x0168 */ char pad_0x168[0x10];
+	public:
 		/* 0x0178 */ bool m_bCodePageSet = false;
 		/* 0x0179 */ bool m_bConsoleAllocated = false;
+	private:
 		/* 0x017A */ char pad_0x17A[0x2];
 		/* 0x017C */ std::uint32_t m_uWarningCounter = 0;
 		/* 0x0180 */ std::uint32_t m_uErrorCounter = 0;

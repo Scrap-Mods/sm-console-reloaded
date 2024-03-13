@@ -15,6 +15,24 @@ int main(HMODULE hModule)
 {
 
     //TODO: Only attach console when contraption->allocated_console
+    UTILS::Console* consoleptr = UTILS::Console::getInstance();
+
+    if (consoleptr != nullptr && !consoleptr->m_bConsoleAllocated) {
+        AllocConsole();
+        HANDLE v_output_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        consoleptr->m_bConsoleAllocated = true;
+        consoleptr->m_hConsole = v_output_handle;
+
+        if (!SetConsoleOutputCP(CP_UTF8))
+        {
+            MessageBoxW(NULL, L"Unable to setup debug console", L"Error", MB_ICONERROR);
+            return 1;
+        }
+
+        consoleptr->m_bCodePageSet = true;
+    }
+
     FILE* fstdin = stdin;
     FILE* fstdout = stdout;
     FILE* fstderr = stderr;

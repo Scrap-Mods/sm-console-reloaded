@@ -23,9 +23,12 @@ namespace ConsoleWindow {
 	bool ShowExecutorWindow = true;
 	bool ConsoleAlwaysOnTop = true;
 
+	bool PreferrServerState = false;
+
 	std::string OpenedFile;
 
 	std::uint32_t editorHash;
+	std::uint32_t openedFileHash;
 
 	// Data
 	static ID3D11Device* g_pd3dDevice = nullptr;
@@ -52,6 +55,10 @@ namespace ConsoleWindow {
 				std::string fileContents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 				editor.SetText(fileContents);
 				OpenedFile = outPath;
+
+				editorHash = crc32c::Crc32c(editor.GetText());
+				openedFileHash = editorHash;
+
 				file.close();
 			}
 			else
@@ -76,6 +83,8 @@ namespace ConsoleWindow {
 		if (file.is_open())
 		{
 			file << editor.GetText();
+			openedFileHash = editorHash;
+
 			printf("Saved %d characters to %s!\n", editor.GetText().size(), ((std::string)OpenedFile).c_str());
 			file.close();
 		}
@@ -91,6 +100,7 @@ namespace ConsoleWindow {
 			{
 				OpenedFile = outPath;
 				file << editor.GetText();
+				openedFileHash = crc32c::Crc32c(editor.GetText());
 				file.close();
 			}
 			else
@@ -106,6 +116,16 @@ namespace ConsoleWindow {
 		else {
 			printf("Error: %s\n", NFD_GetError());
 		}
+	}
+
+	void closeFile() {
+		if (OpenedFile.empty()) return;
+
+		OpenedFile = std::string();
+		editorHash = 0;
+		openedFileHash = 0;
+
+		editor.SetText("");
 	}
 
 	void hookConsole() {
@@ -279,7 +299,13 @@ namespace ConsoleWindow {
 
 			if (ShowExecutorWindow) {
 				ImGui::SetNextWindowClass(&ConsoleWindowClass);
-				ImGui::Begin("Executor", &ShowExecutorWindow, ImGuiWindowFlags_MenuBar);
+
+				int flags = ImGuiWindowFlags_MenuBar;
+		
+				if (!OpenedFile.empty() && editorHash != openedFileHash)
+					flags |= ImGuiWindowFlags_UnsavedDocument;
+
+				ImGui::Begin("Executor", &ShowExecutorWindow, flags);
 
 				TextEditor::Coordinates ExecutorCursor = editor.GetCursorPosition();
 
@@ -295,10 +321,29 @@ namespace ConsoleWindow {
 
 					if (ImGui::BeginMenu("File")) {
 						if (ImGui::MenuItem("Open", "Ctrl+O")) openFile();
-						if (ImGui::MenuItem("Save", "Ctrl+S")) saveFile();
 						if (ImGui::MenuItem("Save as..", "Ctrl+Shift+S")) saveAsFile();
+						if (ImGui::MenuItem("Save", "Ctrl+S", false, !OpenedFile.empty() && editorHash != openedFileHash)) saveFile();
+						if (ImGui::MenuItem("Close", "Ctrl+C", false, !OpenedFile.empty())) closeFile();
 
 						ImGui::EndMenu();
+					}
+
+					if (ImGui::BeginMenu("Options")) {
+						if (ImGui::MenuItem("Reset State", "Ctrl+R")) LuaHook::lState = nullptr;
+						
+						if (ImGui::BeginCombo("Preferred State", PreferrServerState ? "Server" : "Client")) {
+							if (ImGui::Selectable("Client", !PreferrServerState)) PreferrServerState = false;
+							if (ImGui::Selectable("Server", PreferrServerState)) PreferrServerState = true;
+
+							ImGui::EndCombo();
+						}
+
+						ImGui::EndMenu();
+					}
+					
+					if (!OpenedFile.empty()) {
+						ImGui::Separator();
+						ImGui::Text(PathFindFileNameA((LPCSTR)OpenedFile.c_str()));
 					}
 
 					ImGui::EndMenuBar();
@@ -306,12 +351,12 @@ namespace ConsoleWindow {
 
 				editor.Render("TextEditor");
 
-				if (ImGui::BeginMenuBar()) {
-					ImGui::Text("Ln: %d", ExecutorCursor.mLine + 1);
-					ImGui::Text("Ch: %d", ExecutorCursor.mColumn + 1);
-					ImGui::Text(editor.GetLanguageDefinition().mName.c_str());
-					ImGui::EndMenuBar();
-				}
+				//if (ImGui::BeginMenuBar()) {
+				//	ImGui::Text("Ln: %d", ExecutorCursor.mLine + 1);
+				//	ImGui::Text("Ch: %d", ExecutorCursor.mColumn + 1);
+				//	ImGui::Text(editor.GetLanguageDefinition().mName.c_str());
+				//	ImGui::EndMenuBar();
+				//}
 
 				ImGui::End();
 			}

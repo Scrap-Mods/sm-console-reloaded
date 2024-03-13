@@ -14,14 +14,18 @@
 #include "crc32c/crc32c.h"
 #include "ImGuiConsole.h"
 #include <dwmapi.h>
+#include <shlwapi.h>
 
 namespace ConsoleWindow {
 	int consoleWindow();
 	extern TextEditor editor;
 
+	extern bool PreferrServerState;
+
 	extern bool ShowConsoleWindow;
 	extern bool ShowExecutorWindow;
 	extern bool ConsoleAlwaysOnTop;
+
 };
 
 extern std::atomic<bool> exitThreads;
