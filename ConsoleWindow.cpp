@@ -8,6 +8,8 @@
 
 #include "ConsoleWindow.h"
 
+#pragma comment(lib, "Shlwapi.lib")
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace ConsoleWindow {	
@@ -85,7 +87,7 @@ namespace ConsoleWindow {
 			file << editor.GetText();
 			openedFileHash = editorHash;
 
-			printf("Saved %d characters to %s!\n", editor.GetText().size(), ((std::string)OpenedFile).c_str());
+			printf("Saved %zu characters to %s!\n", editor.GetText().size(), ((std::string)OpenedFile).c_str());
 			file.close();
 		}
 	}
