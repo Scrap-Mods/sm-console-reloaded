@@ -190,17 +190,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Console.hpp" />
-    <ClInclude Include="ConsoleWindow.h" />
-    <ClInclude Include="framework.h" />
+    <ClInclude Include="ConsoleWindow.hpp" />
+    <ClInclude Include="framework.hpp" />
     <ClInclude Include="ImGuiColorTextEdit\TextEditor.h" />
-    <ClInclude Include="ImGuiConsole.h" />
-    <ClInclude Include="LuaHook.h" />
+    <ClInclude Include="ImGuiConsole.hpp" />
+    <ClInclude Include="LuaHook.hpp" />
     <ClInclude Include="lua\includes\lauxlib.h" />
     <ClInclude Include="lua\includes\lua.h" />
     <ClInclude Include="lua\includes\lua.hpp" />
     <ClInclude Include="lua\includes\luaconf.h" />
     <ClInclude Include="lua\includes\lualib.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -210,12 +209,6 @@
     <ClCompile Include="ImGuiColorTextEdit\TextEditor.cpp" />
     <ClCompile Include="ImGuiConsole.cpp" />
     <ClCompile Include="LuaHook.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -6,7 +6,7 @@
 // - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
 // - Introduction, links and more at the top of imgui.cpp
 
-#include "ConsoleWindow.h"
+#include "ConsoleWindow.hpp"
 
 #pragma comment(lib, "Shlwapi.lib")
 

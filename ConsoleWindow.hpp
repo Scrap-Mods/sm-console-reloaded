@@ -8,11 +8,11 @@
 #include <tchar.h>
 #include "ImGuiColorTextEdit/TextEditor.h"
 #include <nfd.h>
-#include "LuaHook.h"
+#include "LuaHook.hpp"
 #include "Console.hpp"
 #include "resource.h"
 #include "crc32c/crc32c.h"
-#include "ImGuiConsole.h"
+#include "ImGuiConsole.hpp"
 #include <dwmapi.h>
 #include <shlwapi.h>
 

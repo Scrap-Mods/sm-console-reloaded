@@ -21,13 +21,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
+    <ClInclude Include="framework.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConsoleWindow.h">
+    <ClInclude Include="ConsoleWindow.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Console.hpp">
@@ -36,7 +33,7 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaHook.h">
+    <ClInclude Include="LuaHook.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="lua\includes\lualib.h">
@@ -57,15 +54,12 @@
     <ClInclude Include="ImGuiColorTextEdit\TextEditor.h">
       <Filter>ImGuiColorTextEdit</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiConsole.h">
+    <ClInclude Include="ImGuiConsole.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleWindow.cpp">

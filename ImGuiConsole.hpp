@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include "Console.hpp"
-#include "ConsoleWindow.h"
+#include "ConsoleWindow.hpp"
 #include <format>
 
 extern struct ImGuiConsole {

@@ -18,6 +18,7 @@ namespace LuaHook {
 
 	std::queue<std::string> scripts;
 
+	//TODO: error check this, sm might not be valid in some states :(
 	bool isServerMode(lua_State* L) {
 		lua_getglobal(L, "sm");
 		lua_getfield(L, -1, "isServerMode");
@@ -33,7 +34,8 @@ namespace LuaHook {
 		lua_sethook(L, nullptr, NULL, NULL);
 		TextEditor::ErrorMarkers markers;
 
-		// cursed recursive code 🤯
+		// cursed recursive code 👉👈🤯
+		//TODO: Make it not infinitley recurse :)
 		if (isServerMode(L) != ConsoleWindow::PreferrServerState) {
 			lua_sethook(lState, luahook_ExecQueue, LUA_MASKLINE, NULL);
 			return;

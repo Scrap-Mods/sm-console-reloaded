@@ -1,13 +1,12 @@
 
 // dllmain.cpp : Defines the entry point for the DLL application.
-#include "pch.h"
 #include <cstdio>
 #include <atomic>
 #include <Windows.h>
-#include "ConsoleWindow.h"
+#include "ConsoleWindow.hpp"
 
 #include "Console.hpp"
-#include "LuaHook.h"
+#include "LuaHook.hpp"
 
 std::atomic<bool> exitThreads(false);
 
@@ -58,6 +57,9 @@ int main(HMODULE hModule)
     HANDLE ConsoleWindow = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ConsoleWindow::consoleWindow, NULL, 0, NULL);
 
     LOG_DEFAULT_WHITE("Hello world from SMCL!");
+
+    // Force game to be rescaleable and not fullscreen >:)
+    // GetModuleHandle(NULL);
 
     while (!exitThreads)
     {
