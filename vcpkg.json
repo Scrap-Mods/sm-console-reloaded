@@ -1,0 +1,14 @@
+{
+  "name": "sm-console-reloaded",
+  "version": "1.0.0",
+  "dependencies": [ 
+    "minhook", 
+    "nativefiledialog", 
+    "crc32c", 
+    "boost-regex",
+    {
+      "name": "imgui",
+      "features": [ "docking-experimental", "dx11-binding", "win32-binding" ]
+    } 
+  ]
+}
