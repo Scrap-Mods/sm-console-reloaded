@@ -1,7 +1,4 @@
-﻿#include "LuaHook.h"
-#include "ImGuiColorTextEdit/TextEditor.h">
-#include "ConsoleWindow.h"
-#include <iostream>
+﻿#include "LuaHook.hpp"
 
 namespace LuaHook {
 	int (*original) (lua_State* L, int narg) = nullptr;

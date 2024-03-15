@@ -1,4 +1,4 @@
-#include "ImGuiConsole.h"
+#include "ImGuiConsole.hpp"
 
 ImGuiConsole::ImGuiConsole()
 {
